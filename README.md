@@ -2,7 +2,7 @@
 
 ChainerMNをAzure上で動かすためのテンプレート  
 
-ただし、* 現時点では GPU には未対応 *
+ただし、現時点では GPU には未対応
 
 # deploy and visualize
 
@@ -14,10 +14,14 @@ ChainerMNをAzure上で動かすためのテンプレート
     <img src="http://armviz.io/visualizebutton.png"/>
 </a>
 
+# OSについて
+
+Ubuntu16.04.0-LTS で動作を確認
+
 # デプロイ時間
 
-マスタ、スレーブを Standard_A2、NFSサーバをStandard_A4でデプロイした場合、
-45分程度かかる。
+マスタ、スレーブにStandard_A2、NFSサーバにStandard_A4を指定した場合、
+45分程度かかった。
 
 # 動作確認方法
 
@@ -26,4 +30,4 @@ COREには、マスタ、スレーブの全コア数を指定する。
 
     cd
     cp /tmp/chainermn/examples/mnist/train_mnist.py .
-    mpiexec  -n CORE python3 train_mnist.py
+    mpiexec -n CORE python3 train_mnist.py
