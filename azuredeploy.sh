@@ -58,15 +58,15 @@ setup_chainermn() {
   # check GUP device
   NVIDIA_DEVICE=$(lspci | grep -i NVIDIA)
   echo "$NVIDIA_DEVICE" > /tmp/gpu_check.$$
-  if [ -z "$NVIDIA_DEVICE"]; then
+  if [ -z "$NVIDIA_DEVICE" ]; then
     echo "CPU node" >> /tmp/gpu_check.$$
   fi
-  if [ -n "$NVIDIA_DEVICE"]; then
+  if [ -n "$NVIDIA_DEVICE" ]; then
     echo "GPU node" >> /tmp/gpu_check.$$
   fi
 
   #setup cuda (for GPU node)
-  if [ -n "$NVIDIA_DEVICE"]; then
+  if [ -n "$NVIDIA_DEVICE" ]; then
     CUDA_REPO_PKG=cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
     wget -O /tmp/${CUDA_REPO_PKG} http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/${CUDA_REPO_PKG}
     sudo dpkg -i /tmp/${CUDA_REPO_PKG}
@@ -80,7 +80,7 @@ setup_chainermn() {
   sudo apt-get install -y git vim build-essential python-dev libgtk2.0-dev tmux byobu python-pip python3-pip libffi-dev
 
   # setup cudnn (for GPU node)
-  if [ -n "$NVIDIA_DEVICE"]; then
+  if [ -n "$NVIDIA_DEVICE" ]; then
     cd /tmp
     curl http://developer.download.nvidia.com/compute/redist/cudnn/v6.0/cudnn-8.0-linux-x64-v6.0.tgz > cudnn-8.0-linux-x64-v6.0.tgz
     tar -zxf cudnn-8.0-linux-x64-v6.0.tgz
@@ -97,7 +97,7 @@ setup_chainermn() {
   fi
 
   # setup nccl (for GPU node)
-  if [ -n "$NVIDIA_DEVICE"]; then
+  if [ -n "$NVIDIA_DEVICE" ]; then
     cd /tmp
     mkdir nccl
     cd nccl
@@ -108,7 +108,7 @@ setup_chainermn() {
 
   # setup openmpi
   OPENMPI_CUDA_OPTION=""
-  if [ -n "$NVIDIA_DEVICE"]; then
+  if [ -n "$NVIDIA_DEVICE" ]; then
     OPENMPI_CUDA_OPTION="--with-cuda"
   fi
   echo $OPENMPI_CUDA_OPTION > /tmp/openmpi.$$ 2>&1
@@ -137,7 +137,7 @@ setup_chainermn() {
   sudo ldconfig > /tmp/ldconfig_cython.$$ 2>&1
 
   # setup chainermn
-  if [ -n "$NVIDIA_DEVICE"]; then
+  if [ -n "$NVIDIA_DEVICE" ]; then
     # for GPU node
     LDFLAGS="-L/usr/local/lib/openmpi -L/usr/local/lib" CFLAGS="-I/usr/local/cuda/include -I/usr/local/include" pip3 install git+https://github.com/pfnet/chainermn >> /tmp/chainermn.$$ 2>&1
   else
