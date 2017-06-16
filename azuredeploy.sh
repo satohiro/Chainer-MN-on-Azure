@@ -40,7 +40,6 @@ create_newuser_on_master_and_slave() {
 }
 
 create_etc_hosts() {
-  ##
   echo $MASTER_IP $MASTER_NAME > /etc/hosts
   echo $MASTER_IP $MASTER_NAME > /tmp/hosts.$$
   echo $NFS_SERVER_IP $NFS_SERVER_NAME >> /etc/hosts
@@ -74,7 +73,7 @@ setup_chainermn() {
     sudo apt-get update
     sudo apt-get install -y cuda-drivers
     sudo apt-get install -y cuda
-	sudo nvidia-smi -pm 1 > /tmp/nvidia-smi.$$ 2>&1
+    sudo nvidia-smi -pm 1 > /tmp/nvidia-smi.$$ 2>&1
   fi
 
   # setup libs
@@ -87,13 +86,13 @@ setup_chainermn() {
     tar -zxf cudnn-8.0-linux-x64-v6.0.tgz
     sudo cp -a cuda/lib64/* /usr/local/cuda-8.0/lib64/
     sudo cp -a cuda/include/* /usr/local/cuda-8.0/include/
-	# Bug fix start --
-	#  reference https://askubuntu.com/questions/900285/libegl-so-1-is-not-a-symbolic-link
-	sudo mv /usr/lib/nvidia-375/libEGL.so.1 /usr/lib/nvidia-375/libEGL.so.1.org
+    # Bug fix start --
+    #  reference https://askubuntu.com/questions/900285/libegl-so-1-is-not-a-symbolic-link
+    sudo mv /usr/lib/nvidia-375/libEGL.so.1 /usr/lib/nvidia-375/libEGL.so.1.org
     sudo mv /usr/lib32/nvidia-375/libEGL.so.1 /usr/lib32/nvidia-375/libEGL.so.1.org
     sudo ln -s /usr/lib/nvidia-375/libEGL.so.375.39 /usr/lib/nvidia-375/libEGL.so.1
     sudo ln -s /usr/lib32/nvidia-375/libEGL.so.375.39 /usr/lib32/nvidia-375/libEGL.so.1
-	# Bug fix end -- 
+    # Bug fix end -- 
     sudo ldconfig > /tmp/ldconfig_cudnn.$$ 2>&1
   fi
 
@@ -140,7 +139,7 @@ setup_chainermn() {
   # setup chainermn
   if [ -n "$NVIDIA_DEVICE"]; then
     # for GPU node
-	LDFLAGS="-L/usr/local/lib/openmpi -L/usr/local/lib" CFLAGS="-I/usr/local/cuda/include -I/usr/local/include" pip3 install git+https://github.com/pfnet/chainermn >> /tmp/chainermn.$$ 2>&1
+    LDFLAGS="-L/usr/local/lib/openmpi -L/usr/local/lib" CFLAGS="-I/usr/local/cuda/include -I/usr/local/include" pip3 install git+https://github.com/pfnet/chainermn >> /tmp/chainermn.$$ 2>&1
   else
     # for CPU node
     cd /tmp
@@ -148,9 +147,7 @@ setup_chainermn() {
     cd chainermn
     LDFLAGS="-L/usr/local/lib/openmpi -L/usr/local/lib" CFLAGS="-I/usr/local/cuda/include -I/usr/local/include" python3 setup.py install --no-nccl >> /tmp/chainermn.$$ 2>&1
   fi
- 
  }
-
 
 # Create /tmp/setting.txt.$$
 # deployer information
