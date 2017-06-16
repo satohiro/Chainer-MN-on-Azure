@@ -55,7 +55,7 @@ create_etc_hosts() {
 }
 
 setup_chainermn() {
-  # check GUP device
+  # check GPU device
   NVIDIA_DEVICE=$(lspci | grep -i NVIDIA)
   echo "$NVIDIA_DEVICE" > /tmp/gpu_check.$$
   if [ -z "$NVIDIA_DEVICE" ]; then
