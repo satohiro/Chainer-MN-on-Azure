@@ -70,7 +70,7 @@ setup_chainermn() {
   echo "export LD_LIBRARY_PATH=\"/usr/local/lib/openmpi:\$LD_LIBRARY_PATH\"" >> /tmp/bashrc.$$
   echo "export LIBRARY_PATH=\"/usr/local/lib/openmpi:\$LIBRARY_PATH\"" >> /root/.bashrc
   echo "export LIBRARY_PATH=\"/usr/local/lib/openmpi:\$LIBRARY_PATH\"" >> /tmp/bashrc.$$
-  source /root/.bashrc >> /tmp/bashrc.$$ 2>&1
+  . /root/.bashrc >> /tmp/bashrc.$$ 2>&1
 
   # check GPU device
   NVIDIA_DEVICE=$(lspci | grep -i NVIDIA)
