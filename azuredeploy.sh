@@ -56,14 +56,21 @@ create_etc_hosts() {
 
 setup_chainermn() {
   #setup env
-  export PATH="/usr/local/cuda/bin:$PATH" > /tmp/setenv.$$ 2>1&
-  export CPATH="/usr/local/cuda/include:$CPATH" >> /tmp/setenv.$$ 2>1&
-  export LD_LIBRARY_PATH="/usr/local/cuda/lib64:$LD_LIBRARY_PATH" >> /tmp/setenv.$$ 2>1&
-  export MPI_ROOT="/usr/local/lib/openmpi" >> /tmp/setenv.$$ 2>1&
-  export CPATH="/usr/local/include/openmpi:$CPATH" >> /tmp/setenv.$$ 2>1&
-  export LD_LIBRARY_PATH="/usr/local/lib/openmpi:$LD_LIBRARY_PATH" >> /tmp/setenv.$$ 2>1&
-  export LIBRARY_PATH="/usr/local/lib/openmpi:$LIBRARY_PATH" >> /tmp/setenv.$$ 2>1&
-  env >> /tmp/setenv.$$ 2>1&
+  echo "export PATH=\"/usr/local/cuda/bin:\$PATH\"" >> /root/.bashrc
+  echo "export PATH=\"/usr/local/cuda/bin:\$PATH\"" > /tmp/bashrc.$$
+  echo "export CPATH=\"/usr/local/cuda/include:\$CPATH\"" >> /root/.bashrc
+  echo "export CPATH=\"/usr/local/cuda/include:\$CPATH\"" >> /tmp/bashrc.$$
+  echo "export LD_LIBRARY_PATH=\"/usr/local/cuda/lib64:\$LD_LIBRARY_PATH\"" >> /root/.bashrc
+  echo "export LD_LIBRARY_PATH=\"/usr/local/cuda/lib64:\$LD_LIBRARY_PATH\"" >> /tmp/bashrc.$$
+  echo "export MPI_ROOT=\"/usr/local/lib/openmpi\"" >> /root/.bashrc
+  echo "export MPI_ROOT=\"/usr/local/lib/openmpi\"" >> /tmp/bashrc.$$
+  echo "export CPATH=\"/usr/local/include/openmpi:\$CPATH\"" >> /root/.bashrc
+  echo "export CPATH=\"/usr/local/include/openmpi:\$CPATH\"" >> /tmp/bashrc.$$
+  echo "export LD_LIBRARY_PATH=\"/usr/local/lib/openmpi:\$LD_LIBRARY_PATH\"" >> /root/.bashrc
+  echo "export LD_LIBRARY_PATH=\"/usr/local/lib/openmpi:\$LD_LIBRARY_PATH\"" >> /tmp/bashrc.$$
+  echo "export LIBRARY_PATH=\"/usr/local/lib/openmpi:\$LIBRARY_PATH\"" >> /root/.bashrc
+  echo "export LIBRARY_PATH=\"/usr/local/lib/openmpi:\$LIBRARY_PATH\"" >> /tmp/bashrc.$$
+  source /root/.bashrc >> /tmp/bashrc.$$ 2>&1
 
   # check GPU device
   NVIDIA_DEVICE=$(lspci | grep -i NVIDIA)
