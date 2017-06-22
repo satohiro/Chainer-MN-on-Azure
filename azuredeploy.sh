@@ -55,6 +55,23 @@ create_etc_hosts() {
 }
 
 setup_chainermn() {
+  #setup .bashrc
+  echo "export PATH=\"/usr/local/cuda/bin:\$PATH\"" >> ~/.bashrc
+  echo "export PATH=\"/usr/local/cuda/bin:\$PATH\"" > /tmp/bashrc.$$
+  echo "export CPATH=\"/usr/local/cuda/include:\$CPATH\"" >> ~/.bashrc
+  echo "export CPATH=\"/usr/local/cuda/include:\$CPATH\"" >> /tmp/bashrc.$$
+  echo "export LD_LIBRARY_PATH=\"/usr/local/cuda/lib64:\$LD_LIBRARY_PATH\"" >> ~/.bashrc
+  echo "export LD_LIBRARY_PATH=\"/usr/local/cuda/lib64:\$LD_LIBRARY_PATH\"" >> /tmp/bashrc.$$
+  echo "export MPI_ROOT=\"/usr/local/lib/openmpi\"" >> ~/.bashrc
+  echo "export MPI_ROOT=\"/usr/local/lib/openmpi\"" >> /tmp/bashrc.$$
+  echo "export CPATH=\"/usr/local/include/openmpi:\$CPATH\"" >> ~/.bashrc
+  echo "export CPATH=\"/usr/local/include/openmpi:\$CPATH\"" >> /tmp/bashrc.$$
+  echo "export LD_LIBRARY_PATH=\"/usr/local/lib/openmpi:\$LD_LIBRARY_PATH\"" >> ~/.bashrc
+  echo "export LD_LIBRARY_PATH=\"/usr/local/lib/openmpi:\$LD_LIBRARY_PATH\"" >> /tmp/bashrc.$$
+  echo "export LIBRARY_PATH=\"/usr/local/lib/openmpi:\$LIBRARY_PATH\"" >> ~/.bashrc
+  echo "export LIBRARY_PATH=\"/usr/local/lib/openmpi:\$LIBRARY_PATH\"" >> /tmp/bashrc.$$
+  source ~/.bashrc >> /tmp/bashrc.$$ 2>&1
+
   # check GPU device
   NVIDIA_DEVICE=$(lspci | grep -i NVIDIA)
   echo "$NVIDIA_DEVICE" > /tmp/gpu_check.$$
@@ -139,7 +156,7 @@ setup_chainermn() {
   # setup chainermn
   if [ -n "$NVIDIA_DEVICE" ]; then
     # for GPU node
-    LDFLAGS="-L/usr/local/lib/openmpi -L/usr/local/lib" CFLAGS="-I/usr/local/cuda/include -I/usr/local/include" pip3 install git+https://github.com/pfnet/chainermn >> /tmp/chainermn.$$ 2>&1
+    LDFLAGS="-L/usr/local/lib/openmpi -L/usr/local/lib" CFLAGS="-I/usr/local/cuda/include -I/usr/local/include" pip3 install chainermn >> /tmp/chainermn.$$ 2>&1
   else
     # for CPU node
     cd /tmp
