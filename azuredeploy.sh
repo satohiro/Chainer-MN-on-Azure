@@ -156,8 +156,8 @@ setup_chainermn() {
   # setup chainermn
   if [ -n "$NVIDIA_DEVICE" ]; then
     # for GPU node
-    #LDFLAGS="-L/usr/local/lib/openmpi -L/usr/local/lib" CFLAGS="-I/usr/local/cuda/include -I/usr/local/include" pip3 install cupy >> /tmp/cupy.$$ 2>&1
-    #LDFLAGS="-L/usr/local/lib/openmpi -L/usr/local/lib" CFLAGS="-I/usr/local/cuda/include -I/usr/local/include" pip3 install chainer >> /tmp/chainer.$$ 2>&1
+    LDFLAGS="-L/usr/local/lib/openmpi -L/usr/local/lib" CFLAGS="-I/usr/local/cuda/include -I/usr/local/include" pip3 install cupy >> /tmp/cupy.$$ 2>&1
+    LDFLAGS="-L/usr/local/lib/openmpi -L/usr/local/lib" CFLAGS="-I/usr/local/cuda/include -I/usr/local/include" pip3 install chainer >> /tmp/chainer.$$ 2>&1
     LDFLAGS="-L/usr/local/lib/openmpi -L/usr/local/lib" CFLAGS="-I/usr/local/cuda/include -I/usr/local/include" pip3 install chainermn >> /tmp/chainermn.$$ 2>&1
   else
     # for CPU node
