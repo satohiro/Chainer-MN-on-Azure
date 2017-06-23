@@ -74,6 +74,7 @@ setup_chainermn() {
 
   # check GPU device
   NVIDIA_DEVICE=$(lspci | grep -i NVIDIA)
+  GPU_NUMBER=$(lspci | grep -i NVIDIA | wc | awk '{print $1}')
   echo "$NVIDIA_DEVICE" > /tmp/gpu_check.$$
   if [ -z "$NVIDIA_DEVICE" ]; then
     echo "CPU node" >> /tmp/gpu_check.$$
@@ -140,12 +141,16 @@ setup_chainermn() {
   sudo make install >> /tmp/openmpi.$$ 2>&1
 
   # setup hostfile
-  echo $MASTER_IP >> /usr/local/etc/openmpi-default-hostfile
+  HOSTFILE_CPU=""
+  if [ -n "$NVIDIA_DEVICE" ]; then
+    HOSTFILE_CPU="cpu=$GPU_NUMBER"
+  fi
+  echo $MASTER_IP $HOSTFILE_CPU >> /usr/local/etc/openmpi-default-hostfile
   i=0
   while [ $i -lt $NUMBER_OF_EXEC ]
   do
     workerip=`expr $i + $WORKER_IP_START`
-    echo $WORKER_IP_BASE$workerip  >> /usr/local/etc/openmpi-default-hostfile
+    echo $WORKER_IP_BASE$workerip $HOSTFILE_CPU >> /usr/local/etc/openmpi-default-hostfile
     i=`expr $i + 1`
   done
 
