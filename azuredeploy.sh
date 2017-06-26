@@ -83,6 +83,13 @@ setup_chainermn() {
     echo "GPU node" >> /tmp/gpu_check.$$
   fi
 
+  # update /etc/environment (for GPU node)
+  if [ -n "$NVIDIA_DEVICE" ]; then
+    mv /etc/environment /etc/environment.bk.$$
+    cat /etc/environment.bk.$$ | sed 's\PATH="\PATH="/usr/local/cuda/bin:\g' > /etc/environment
+    cat /etc/environment > /tmp/environment.$$
+  fi
+
   #setup cuda (for GPU node)
   if [ -n "$NVIDIA_DEVICE" ]; then
     CUDA_REPO_PKG=cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
