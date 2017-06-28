@@ -2,7 +2,11 @@
 
 ChainerMNをAzure上で動かすためのテンプレート  
 
-ただし、現時点では GPU には未対応
+マスタ、スレーブ、NFSサーバで構成  
+
+マスタとスレーブには、CPU仮想マシン(例:Standard_A2)やGPU仮想マシン(例:Standard_Nc6)を指定可能
+
+NFSサーバにはデータディスク10個を接続可能な仮想マシン(例:Standard_A4)を指定
 
 # deploy and visualize
 
@@ -16,18 +20,30 @@ ChainerMNをAzure上で動かすためのテンプレート
 
 # OSについて
 
-Ubuntu16.04.0-LTS で動作を確認
+Ubuntu16.04.0-LTS に対応
 
 # デプロイ時間
 
-マスタ、スレーブにStandard_A2、NFSサーバにStandard_A4を指定した場合、
-45分程度かかった。
+CPU/GPUとも45～50分程度かかる。
 
 # 動作確認方法
 
 generaluser でマスタにログイン後、以下の操作でMNISTを実行できる。
-COREには、マスタ、スレーブの全コア数を指定する。
+
+## CPU仮想マシンの場合
 
     cd
-    cp /tmp/chainermn/examples/mnist/train_mnist.py .
-    mpiexec -n CORE python3 train_mnist.py
+    wget https://raw.githubusercontent.com/chainer/chainermn/master/examples/mnist/train_mnist.py
+    mpiexec -n <CORE> python3 train_mnist.py
+
+<CORE>にはマスタ、スレーブの全コア数を指定。
+例えばStandard_A2を2VM使う場合、4を指定。
+
+## GPU仮想マシンの場合
+
+    cd
+    wget https://raw.githubusercontent.com/chainer/chainermn/master/examples/mnist/train_mnist.py
+    mpiexec -n <GPU> python3 train_mnist.py -g
+
+<GPU>にはマスタ、スレーブの全GPU数を指定。
+例えばStandard_Nc6を2VM使う場合、2を指定。
