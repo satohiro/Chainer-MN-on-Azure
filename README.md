@@ -36,7 +36,7 @@ generaluser でマスタにログイン後、以下の操作でMNISTを実行できる。
     wget https://raw.githubusercontent.com/chainer/chainermn/master/examples/mnist/train_mnist.py
     mpiexec -n <CORE> python3 train_mnist.py
 
-<CORE>にはマスタ、スレーブの全コア数を指定。
+COREにはマスタ、スレーブの全コア数を指定。
 例えばStandard_A2を2VM使う場合、4を指定。
 
 ## GPU仮想マシンの場合
@@ -45,5 +45,5 @@ generaluser でマスタにログイン後、以下の操作でMNISTを実行できる。
     wget https://raw.githubusercontent.com/chainer/chainermn/master/examples/mnist/train_mnist.py
     mpiexec -n <GPU> python3 train_mnist.py -g
 
-<GPU>にはマスタ、スレーブの全GPU数を指定。
+GPUにはマスタ、スレーブの全GPU数を指定。
 例えばStandard_Nc6を2VM使う場合、2を指定。
